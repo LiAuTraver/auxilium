@@ -15,6 +15,7 @@ vcpkg_cmake_configure(
       -DSCN_BENCHMARKS=OFF
       -DSCN_DOCS=OFF
       -DSCN_USE_EXTERNAL_FAST_FLOAT=ON
+      ### enable sanitizers
       -DSCN_USE_ASAN=ON
       -DSCN_USE_UBSAN=ON
       -DSCN_USE_MSAN=ON
