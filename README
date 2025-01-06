@@ -1,0 +1,11 @@
+# Auxilium: a custom vcpkg registry
+
+## Add the registry
+
+### Local
+
+Suppose the path to the registry is: `M:/auxilium`:
+```powershell
+vcpkg x-local-registry add M:/auxilium
+```
+

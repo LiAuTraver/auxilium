@@ -1,5 +1,5 @@
 # portfile.cmake
-set(SOURCE_PATH "${CMAKE_CURRENT_LIST_DIR}/../../../source/auxilia")
+set(SOURCE_PATH "Z:/luce/source/auxilia")
 
 vcpkg_cmake_configure(
     SOURCE_PATH ${SOURCE_PATH}
