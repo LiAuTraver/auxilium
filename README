@@ -6,6 +6,41 @@
 
 Suppose the path to the registry is: `M:/auxilium`:
 ```powershell
-vcpkg x-local-registry add M:/auxilium
+$env:VCPKG_DEFAULT_TRIPLET="x64-win-llvm"
+$env:VCPKG_OVERLAY_PORTS="M:/auxilium/ports"
+
+vcpkg install `
+              fmt:x64-win-llvm `
+              magic-enum:x64-win-llvm ` 
+              gtest:x64-win-llvm `
+              benchmark:x64-win-llvm `
+              capstone[x86,riscv]:x64-win-llvm `
+              spdlog:x64-win-llvm `
+              scnlib:x64-win-llvm `
+              glaze:x64-win-llvm `
+              zlib:x64-win-llvm `
+              argparse:x64-win-llvm `
+--overlay-ports=ports --overlay-triplets=triplets [ --no-dry-run --editable ]
+
+vcpkg install llvm[bolt,core,clang,clang-tools-extra,compiler-rt,default-targets,enable-abi-breaking-checks,enable-assertions,enable-bindings,enable-eh,enable-ffi,enable-libxml2,enable-rtti,enable-zlib,enable-zstd,lld,lldb,target-riscv,target-x86,tools,utils]:x64-win-llvm`
+--overlay-ports=ports --overlay-triplets=triplets [ --no-dry-run --editable ]
 ```
+
+### Windows Specific
+#### Libunwind
+```log
+CMake Error at libunwind/src/CMakeLists.txt:102 (message):
+  Compiler doesn't support generation of unwind tables if exception support
+  is disabled.  Building libunwind DSO with runtime dependency on C++ ABI
+  library is not supported.
+```
+#### pstl
+```log
+CMake Error /*...*/
+  build pstl with MSVC is not supported
+```
+
+#### Libs
+
+libc,libcxx,libcxxabi ... is not supported on Windows
 
