@@ -15,10 +15,14 @@ vcpkg_cmake_configure(
       -DSCN_BENCHMARKS=OFF
       -DSCN_DOCS=OFF
       -DSCN_USE_EXTERNAL_FAST_FLOAT=ON
+      -DSCN_REGEX_BACKEND=re2
       ### enable sanitizers
       -DSCN_USE_ASAN=ON
       -DSCN_USE_UBSAN=ON
       -DSCN_USE_MSAN=ON
+      -DSCN_FUZZING=ON
+      -DSCN_USE_EXTERNAL_GTEST=ON
+      -DSCN_USE_EXTERNAL_BENCHMARK=ON
 )
 
 vcpkg_cmake_install()

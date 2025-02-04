@@ -11,6 +11,8 @@
 # ===------------------------------------------------------------------===#
 # IMPORTANT:                                                              #
 #            Only use this triplet for 64-bit windows target              #
+#   Currently incompatible packages:                                      #
+#     - benchmark                                                         #
 # ===------------------------------------------------------------------===#
 #===]===]
 
@@ -30,7 +32,7 @@ set(COMMON_FLAGS
   " /external:W0" # External headers no warnings
   " /permissive-" # Permissive mode
   " /analyze-" # Disable code analysis
-  " /Qpar" # Parallel code generation
+  # " /Qpar" # Parallel code generation, conflicts with /fsanitize=address
   " /DWIN32"
   " /DUNICODE"
   " /D_UNICODE"
