@@ -12,7 +12,7 @@
 # IMPORTANT:                                                              #
 #            Only use this triplet for 64-bit windows target              #
 #   Currently incompatible packages:                                      #
-#     - benchmark                                                         #
+#     -                                                                   #
 # ===------------------------------------------------------------------===#
 #===]===]
 
@@ -30,8 +30,10 @@ set(COMMON_FLAGS
   " /WX-" # No warnings as errors
   " /W0" # No warnings
   " /external:W0" # External headers no warnings
-  " /permissive-" # Permissive mode
+
+  # " /permissive" # Permissive mode
   " /analyze-" # Disable code analysis
+
   # " /Qpar" # Parallel code generation, conflicts with /fsanitize=address
   " /DWIN32"
   " /DUNICODE"
@@ -51,11 +53,6 @@ set(COMMON_FLAGS
   " /diagnostics:caret" # Enhanced diagnostics if has error
 )
 
-foreach(flag ${COMMON_FLAGS})
-  string(APPEND VCPKG_C_FLAGS ${flag})
-  string(APPEND VCPKG_CXX_FLAGS ${flag})
-endforeach()
-
 # C++ specific flags
 string(APPEND VCPKG_CXX_FLAGS
   " /D_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH" # just in case when linking error happens
@@ -70,9 +67,11 @@ string(APPEND VCPKG_CXX_FLAGS
 )
 
 set(COMMON_DEBUG_FLAGS
-  " /Zi" # Debug information format
+
+  # " /Zi" # Debug information format
   " /Od" # Disable optimization
   " /guard:cf" # Control Flow Guard
+  " /guard:ehcont" # EH Continuation metadata
   " /MP" # Multi/process compilation(for big packages)
   " /Ob0" # Disable inlining
   " /D_DEBUG"
@@ -80,8 +79,18 @@ set(COMMON_DEBUG_FLAGS
   " /RTCsu" # Runtime checks
   " /fsanitize=address" # Address sanitizer
 
-  # " /fsanitize=fuzzer" # Fuzzer sanitizer # llvm fails to link. :(
+  # " /fsanitize=fuzzer" # Fuzzer sanitizer only available in clang, here we uses msvc.
 )
+
+if(PORT MATCHES "zlib|libxml2|llvm")
+  message(STATUS "workaround patch (e.g., 'O_RDONLY', off_t : undeclared identifier)")
+  string(APPEND COMMON_FLAGS " /D_CRT_DECLARE_NONSTDC_NAMES=1")
+endif()
+
+foreach(flag ${COMMON_FLAGS})
+  string(APPEND VCPKG_C_FLAGS ${flag})
+  string(APPEND VCPKG_CXX_FLAGS ${flag})
+endforeach()
 
 foreach(flag ${COMMON_DEBUG_FLAGS})
   string(APPEND VCPKG_C_FLAGS_DEBUG ${flag})
@@ -91,7 +100,6 @@ endforeach()
 # Debug specific flags
 string(APPEND VCPKG_CXX_FLAGS_DEBUG
   " /GR" # Enable RTTI
-  " /guard:ehcont" # EH Continuation metadata
   " /D_DISABLE_VECTOR_ANNOTATION"
   " /D_DISABLE_STRING_ANNOTATION"
 )

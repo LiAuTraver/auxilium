@@ -11,27 +11,30 @@ $env:VCPKG_OVERLAY_PORTS="D:/auxilium/ports"
 $env:VCPKG_OVERLAY_TRIPLETS="D:/auxilium/triplets"
 
 vcpkg install `
-              fmt:x64-windows `
-              magic-enum:x64-windows ` 
-              gtest:x64-windows `
-              benchmark:x64-windows `
-              capstone[x86,riscv]:x64-windows `
-              spdlog:x64-windows `
-              scnlib:x64-windows `
-              glaze:x64-windows `
-              zlib:x64-windows `
-              argparse:x64-windows `
---overlay-ports=ports --overlay-triplets=triplets 
+        abseil `
+        argparse `
+        boost-asio `
+        spdlog `
+        fmt `
+        zlib `
+        zstd `
+        capstone[riscv,x86] `
+        catch2 `
+        concurrencpp `
+        date `
+        ftxui `
+        gtest `
+        libxml2[iconv,lzma,zlib] `
+        tabulate `
+        re2 `
+        magic-enum `
+        scnlib `
+        glaze `
+        --overlay-ports=ports --overlay-triplets=triplets
 
-vcpkg install llvm  `
-      [bolt,core,clang,clang-tools-extra,compiler-rt, `
-       default-targets,enable-abi-breaking-checks, `
-       enable-assertions,enable-bindings,enable-eh,  `
-       enable-ffi,enable-libxml2,enable-rtti,enable-zlib,  `
-       enable-zstd,lld,lldb,target-riscv,target-x86,tools,utils] `
-      :x64-windows --overlay-ports=ports --overlay-triplets=triplets 
+vcpkg install llvm[bolt,core,clang,clang-tools-extra,compiler-rt,default-targets,enable-abi-breaking-checks,enable-assertions,enable-bindings,enable-eh,enable-ffi,enable-libxml2,enable-rtti,enable-terminfo,enable-zlib,enable-zstd,lld,lldb,target-riscv,target-x86,tools,utils]:x64-windows --overlay-ports=ports --overlay-triplets=triplets
 ```
-> *optional: add `--no-dry-run --editable` to the install command*
+> *optional: add `--no-dry-run --no-downloads --editable` to the install command*
 
 ### Windows Specific
 #### Libunwind
